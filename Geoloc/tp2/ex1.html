@@ -65,6 +65,15 @@ function start1(){
             lat = position.coords.latitude;
             map.setView([lat, long], 13);
             var marker = L.marker([lat, long]).addTo(map)
+
+            var markMetz = L.marker([49.133, 6.167]).addTo(map)
+            markMetz.bindPopup("<b>Metz</b>").openPopup()
+
+            var polygon = L.polygon([
+                [29.122349, -80.991361],
+                [18.216919, -66.580912],   
+                [32.99, -64.79]
+            ]).addTo(map);
         }
 
 
@@ -86,11 +95,27 @@ function start1(){
     start1()
 
 
+
+    var Stamen_Toner = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 20,
+	ext: 'png'
+}).addTo(map);
+
+let xhr = new XMLHttpRequest();
+xhr.open('GET', 'https://geo.api.gouv.fr/departements/57/communes?fields=nom,centre,surface,contour&format=geojson&geometry=contour');
+xhr.setRequestHeader('Content-Type', 'application/json')
+xhr.responseType = "json";
+xhr.onload = function(){ if (xhr.status !== 200) return 
+L.geoJSON(xhr.response).addTo(map); };
+xhr.send();
         
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+/*L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
+}).addTo(map);*/
 
 
 
