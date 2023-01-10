@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <script type="text/javascript">
+
+        function start1(){
+            if(navigator.geolocation){
+                var id = navigator.geolocation.watchPosition(success1, error, {
+                                                                            enableHighAccuracy: true,
+                                                                            timeout: 10000,
+                                                                            maximumAge: 0
+                                                                            })
+            }
+            else{
+                alert("Erreur, navigator.geolocation ne marche pas")
+            }
+        }
+
+        function start2(){
+            if(navigator.geolocation){
+                var id = navigator.geolocation.getCurrentPosition(success2, error, {
+                                                                            enableHighAccuracy: true,
+                                                                            timeout: 10000,
+                                                                            maximumAge: 0
+                                                                            })
+            }
+            else{
+                alert("Erreur, navigator.geolocation marche pas frr")
+            }
+        }
+        
+        function stop(){
+            navigator.geolocation.clearWatch(id);
+        }  
+
+        function success1(position){
+            document.getElementById("longitude1").innerHTML = position.coords.longitude;
+            document.getElementById("latitude1").innerHTML = position.coords.latitude;
+            document.getElementById("altitude1").innerHTML = position.coords.altitude;
+            document.getElementById("precision1").innerHTML = position.coords.accuracy;
+            document.getElementById("vitesse1").innerHTML = position.coords.speed;
+            document.getElementById("time1").innerHTML = new Date(position.timestamp);
+        }
+
+        function success2(position){
+            document.getElementById("longitude2").innerHTML = position.coords.longitude;
+            document.getElementById("latitude2").innerHTML = position.coords.latitude;
+            document.getElementById("altitude2").innerHTML = position.coords.altitude;
+            document.getElementById("precision2").innerHTML = position.coords.accuracy;
+            document.getElementById("vitesse2").innerHTML = position.coords.speed;
+            document.getElementById("time2").innerHTML = new Date(position.timestamp);
+        }
+
+        function error(e){
+            switch(error.code){
+                case error.PERMISSION_DENIED:
+                    alert("erreur permission");
+                    break;          
+                case error.POSITION_UNAVAILABLE:
+                    alert("erreur position");
+                    break;
+                case error.TIMEOUT:
+                    alert("timeout");
+                    break;
+                }
+        };
+
+        if(window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', function(orientation) {
+          var firstDiv = exercice3.find('.function1') ;
+          firstDiv.find('ul').empty() ;
+          firstDiv.find('ul').append(
+            "<li>Alpha : " + orientation.alpha + "</li>",
+            "<li>Beta : " + orientation.beta + "</li>",
+            "<li>Gamma : " + orientation.gamma + "</li>"
+            ) ;
+        });
+      }
+
+      if(window.DeviceMotionEvent) {
+        window.addEventListener('devicemotion', function(orientation) {
+          var secondDiv = exercice3.find('.function2') ;
+          secondDiv.find('ul').empty() ;
+          secondDiv.find('ul').append(
+            "<li>Acceleration X : " + orientation.acceleration.x + "</li>",
+            "<li>Acceleration Y : " + orientation.acceleration.y + "</li>",
+            "<li>Acceleration Z : " + orientation.acceleration.z + "</li>",
+            "<li>Rotation alpha : " + orientation.rotationRate.alpha + "</li>",
+            "<li>Rotation beta : " + orientation.rotationRate.beta + "</li>",
+            "<li>Rotation gamma : " + orientation.rotationRate.gamma + "</li>"
+            ) ;
+        });
+      }
+    </script>
+</head>
+<body>
+    <div>
+        <p><b>watchPosition()</b></p>
+        <ul>
+            <li>longitude : <span id="longitude1"></span></li>
+            <li>latitude : <span id="latitude1"></span></li>
+            <li>altitude : <span id="altitude1"></span></li>
+            <li>precision : <span id="precision1"></span></li>
+            <li>vitesse : <span id="vitesse1"></span></li>
+            <li>time stamspan : <span id="time1"></span></li>
+        </ul>
+        <a href="#" onclick="start1()">start</a>
+        <a href="#" onclick="stop()">stop</a>
+    </div>
+
+    <div>
+        <p><b>getCurrentPosition()</b></p>
+        <ul>
+            <li>longitude : <span id="longitude2"></span></li>
+            <li>latitude : <span id="latitude2"></span></li>
+            <li>altitude : <span id="altitude2"></span></li>
+            <li>precision : <span id="precision2"></span></li>
+            <li>vitesse : <span id="vitesse2"></span></li>
+            <li>time stamspan : <span id="time2"></span></li>
+        </ul>
+        <a href="#" onclick="start2()">start</a>
+        <a href="#" onclick="stop()">stop</a>
+    </div>
+</body>
+</html>
