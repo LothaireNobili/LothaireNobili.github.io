@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <script type="text/javascript">
+        function draw() {
+            var canvas = document.getElementById("mycanvas");
+
+                if (canvas.getContext) {
+                    
+                    var ctx = canvas.getContext("2d");
+
+                    let img = new Image();   // Crée un nouvel élément Image
+                    img.src = 'pola.jpg'; // Définit le chemin vers sa source
+                    img.addEventListener('load', function() {
+                        ctx.drawImage(img, 33, 170, 612, 408);
+
+                        ctx.fillStyle = 'rgb(200, 0, 0)';
+                        ctx.fillRect(500, 10, 50, 50);
+
+                        ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+                        ctx.fillRect(300, 40, 50, 50);
+
+
+                        ctx.fillStyle = 'rgba(200, 150, 75, 1)';
+                        ctx.fillRect(200, 400, 200, 150);
+
+                        ctx.fillStyle = 'rgba(120, 60, 60, 1)';
+                        ctx.fillRect(250, 450, 50, 100);
+
+                        ctx.beginPath();
+                        ctx.moveTo(200, 400);
+                        ctx.lineTo(400, 400);
+                        ctx.lineTo(300, 300);
+                        ctx.fillStyle='rgba(240, 60, 60, 1)';
+                        ctx.fill();
+
+
+                        ctx.beginPath();
+                        ctx.arc(400, 250, 50, 0, 2 * Math.PI);
+                        ctx.fillStyle='rgba(240, 240, 60, 1)';
+                        ctx.fill();
+
+                    }, false);
+                    
+                }
+
+                
+
+        }   
+          
+      </script>
+
+
+</head>
+<body onload="draw();">
+
+    <canvas id="mycanvas" width="1080" height="720"></canvas>
+
+    
+</body>
+</html>
