@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.116.1/build/three.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+
+    
+</head>
+
+<body>
+    <script>
+
+        function toCartesian(longitude, latitude) {
+        var x = Math.cos(latitude * (Math.PI / 180)) * Math.cos(longitude * (Math.PI / 180));
+        var y = Math.cos(latitude * (Math.PI / 180)) * Math.sin(longitude * (Math.PI / 180));
+        var z = Math.sin(latitude * (Math.PI / 180));
+
+        return new THREE.Vector3(x, y, z);
+        }
+
+      
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+
+        var sphereshape = new THREE.SphereGeometry(1, 32, 32);
+        var texture = new THREE.TextureLoader().load("2k_earth_daymap.jpg", function (texture) {  //chargement de la texture
+            var material = new THREE.MeshBasicMaterial({ map: texture });
+            var sphere = new THREE.Mesh(sphereshape, material);
+            scene.add(sphere);
+
+            var light = new THREE.PointLight( 0xffffff, 1, 1000 );
+            light.position.set( 50, 150, 50 );
+            scene.add( light );
+            camera.position.z = 5;
+            renderer.render(scene, camera);
+        });
+        
+    </script>
+</body>
+
+</html>
